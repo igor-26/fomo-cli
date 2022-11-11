@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "fomo"
+version = "0.1.0"
+description = ""
+authors = ["igor-26"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+praw = "^7.6.0"
+python-dotenv = "^0.21.0"
+termcolor = "^2.0.1"
+rich = "^12.5.1"
+spotipy = "^2.20.0"
+tweepy = "^4.10.1"
+pytz = "^2022.2.1"
+mypy = "^0.982"
+types-pytz = "^2022.6.0"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^22.8.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
