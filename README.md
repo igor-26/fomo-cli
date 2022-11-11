@@ -13,7 +13,7 @@
 1. Clone the repository
 
 ```bash
-git clone git@github.com:igor-26/fomo.git
+git clone git@github.com:igor-26/fomo-cli.git
  ```
 
 2. Navigate to project root
