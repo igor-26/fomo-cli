@@ -170,8 +170,8 @@ test = ["appdirs (==1.4.4)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)", "pytes
 
 [[package]]
 name = "praw"
-version = "7.6.0"
-description = "PRAW, an acronym for `Python Reddit API Wrapper`, is a python package that allows for simple access to  Reddit's API."
+version = "7.6.1"
+description = "PRAW, an acronym for \"Python Reddit API Wrapper\", is a python package that allows for simple access to  Reddit's API."
 category = "main"
 optional = false
 python-versions = "~=3.7"
@@ -183,9 +183,9 @@ websocket-client = ">=0.54.0"
 
 [package.extras]
 ci = ["coveralls"]
-dev = ["packaging", "pre-commit", "sphinx", "sphinx-rtd-theme", "betamax (>=0.8,<0.9)", "betamax-matchers (>=0.3.0,<0.5)", "pytest (>=2.7.3)", "requests (>=2.20.1,<3)"]
-lint = ["pre-commit", "sphinx", "sphinx-rtd-theme"]
-readthedocs = ["sphinx", "sphinx-rtd-theme"]
+dev = ["packaging", "pre-commit", "sphinx", "sphinx-rtd-dark-mode", "sphinx-rtd-theme", "betamax (>=0.8,<0.9)", "betamax-matchers (>=0.3.0,<0.5)", "pytest (>=2.7.3)", "requests (>=2.20.1,<3)"]
+lint = ["pre-commit", "sphinx", "sphinx-rtd-dark-mode", "sphinx-rtd-theme"]
+readthedocs = ["sphinx", "sphinx-rtd-dark-mode", "sphinx-rtd-theme"]
 test = ["betamax (>=0.8,<0.9)", "betamax-matchers (>=0.3.0,<0.5)", "pytest (>=2.7.3)", "requests (>=2.20.1,<3)"]
 
 [[package]]
@@ -549,8 +549,8 @@ platformdirs = [
     {file = "platformdirs-2.5.2.tar.gz", hash = "sha256:58c8abb07dcb441e6ee4b11d8df0ac856038f944ab98b7be6b27b2a3c7feef19"},
 ]
 praw = [
-    {file = "praw-7.6.0-py3-none-any.whl", hash = "sha256:0d8a75c8c9f78c0101f31653b68d23d0d9cee9a6ada7910f809610edcd905090"},
-    {file = "praw-7.6.0.tar.gz", hash = "sha256:3eeebe093f2d905b6c99e18aa8c8f64071b2e7a05e60b618166ee53397cdae72"},
+    {file = "praw-7.6.1-py3-none-any.whl", hash = "sha256:33ac091cd061d9bd607ae231d4ea40025060a4ecb5e11baa5ce9a25c6d2f5a6b"},
+    {file = "praw-7.6.1.tar.gz", hash = "sha256:07fc95ffc52187351ab77b81fa6910c66e8fa084faf4b060b90864ad186dfb9e"},
 ]
 prawcore = [
     {file = "prawcore-2.3.0-py3-none-any.whl", hash = "sha256:48c17db447fa06a13ca3e722201f443031437708daa736c05a1df895fbcceff5"},
