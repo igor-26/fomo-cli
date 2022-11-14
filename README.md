@@ -5,7 +5,7 @@
 
 **FOMO** is a CLI tool that helps you stay up to date with your social media.
 
-
+**Currently supported integrations**: reddit, Twitter and Spotify.
 
 
 ## Getting Started
