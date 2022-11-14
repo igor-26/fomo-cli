@@ -130,12 +130,14 @@ def format_tweet(tweet: Tweet, user: User, metrics: dict, _timezone: str) -> str
 def format_tweet_count(tweets: list[Response]) -> str:
     """Returns formatted representation of tweet count"""
 
-    tweet_count = len(tweets)
-
-    if not tweet_count:
+    if not len(tweets):
         return "[red bold]No tweets found.[/red bold]"
 
-    return f"[green]{tweet_count} new {'tweet' if tweet_count == 1 else 'tweets'}[/green]"
+    tweet_count = sum([t.meta["result_count"] for t in tweets])
+
+    return (
+        f"[green]{tweet_count} new {'tweet' if tweet_count == 1 else 'tweets'}[/green]"
+    )
 
 
 def render_to_console(all_tweets: list[Response]) -> None:
