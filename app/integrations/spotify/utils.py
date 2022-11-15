@@ -5,7 +5,6 @@ from rich.console import Console
 from rich.progress import track as rich_track
 from spotipy import Spotify
 
-
 console = Console()
 
 

@@ -1,11 +1,11 @@
 import json
 import os
 from argparse import Namespace
-from parser import get_parsed_args
+from app.parser import get_parsed_args
 
 from dotenv import load_dotenv
 
-from lib import build_integration_function_map, get_integration_render_functions
+from app.lib import build_integration_function_map, get_integration_render_functions
 
 load_dotenv()
 

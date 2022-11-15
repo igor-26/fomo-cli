@@ -1,9 +1,10 @@
 import os
-from parser import get_parsed_args
 from typing import cast
 
 from dotenv import load_dotenv
 from praw import Reddit
+
+from app.parser import get_parsed_args
 
 from .utils import filter_subreddits, render_to_console
 
