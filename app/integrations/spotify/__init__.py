@@ -1,10 +1,11 @@
 import os
-from parser import get_parsed_args
 from typing import cast
 
 from dotenv import load_dotenv
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
+
+from app.parser import get_parsed_args
 
 from .utils import (
     get_current_user_followed_artists,

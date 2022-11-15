@@ -109,7 +109,9 @@ def format_tweet(tweet: Tweet, user: User, metrics: dict, _timezone: str) -> str
     """Returns formatted tweet representation"""
 
     name = f"[bold]{user['name']}[/bold]"
-    username = f"[link=https://twitter.com/{user['username']}]@{user['username']}[/link]"
+    username = (
+        f"[link=https://twitter.com/{user['username']}]@{user['username']}[/link]"
+    )
     created_at = f'{(tweet["created_at"].astimezone(pytz.timezone(_timezone))).strftime("%b %-d %H:%M")} ({_timezone})'
     body = tweet["text"]
     replies = f"💬 {metrics['reply_count']}"

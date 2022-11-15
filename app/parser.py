@@ -20,9 +20,7 @@ def get_parsed_args() -> Namespace:
     )
 
     # spotify
-    parser.add_argument(
-        "--spotify-days-ago", type=int, help="Days since released"
-    )
+    parser.add_argument("--spotify-days-ago", type=int, help="Days since released")
 
     # twitter
     parser.add_argument(

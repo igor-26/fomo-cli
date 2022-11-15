@@ -27,17 +27,17 @@ def build_integration_function_map(
     integration_function_map = {}
 
     if "reddit" in enabled_integrations:
-        from integrations.reddit import init as render_reddit_results
+        from app.integrations.reddit import init as render_reddit_results
 
         integration_function_map["reddit"] = render_reddit_results
 
     if "twitter" in enabled_integrations:
-        from integrations.twitter import init as render_twitter_results
+        from app.integrations.twitter import init as render_twitter_results
 
         integration_function_map["twitter"] = render_twitter_results
 
     if "spotify" in enabled_integrations:
-        from integrations.spotify import init as render_spotify_results
+        from app.integrations.spotify import init as render_spotify_results
 
         integration_function_map["spotify"] = render_spotify_results
 

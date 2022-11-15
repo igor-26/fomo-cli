@@ -1,5 +1,5 @@
 import os
-from parser import get_parsed_args
+from app.parser import get_parsed_args
 from typing import cast
 
 from dotenv import load_dotenv
