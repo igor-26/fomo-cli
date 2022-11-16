@@ -99,7 +99,7 @@ def format_post(post: Submission, base_url: str, _timezone: str) -> str:
 
 
 def render_to_console(
-    subreddits: list[Submission], hours_ago: int, base_url: str
+    subreddits: list[Subreddit], hours_ago: int, base_url: str
 ) -> None:
     """Renders processed data to console"""
 
