@@ -17,7 +17,7 @@ git clone git@github.com:igor-26/fomo-cli.git
 2. Navigate to project root
 
 ```bash
-cd fomo
+cd fomo-cli
  ```
 
 3. Spawn poetry shell
