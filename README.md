@@ -54,7 +54,7 @@ List of integrations to exclude.
 
 ---
 
-**1. Twitter**
+### Twitter
 
 
 **`--twitter-hours-ago`** | `int`
@@ -97,7 +97,7 @@ python fomo.py --integrations-include twitter --twitter-hours-ago 12 --twitter-r
   <img src="assets/usage_twitter.png"/>
 </p>
 
-**2. Reddit**
+### Reddit
 
 
 **`--reddit-hours-ago`** | `int`
@@ -130,7 +130,7 @@ python fomo.py --integrations-include reddit --reddit-include rust python --redd
   <img src="assets/usage_reddit.png"/>
 </p>
 
-**3. Spotify**
+### Spotify
 
 **`--spotify-days-ago`** | `int`
 
