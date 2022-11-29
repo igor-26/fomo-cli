@@ -9,6 +9,7 @@ from praw.models.reddit.submission import Submission
 from praw.models.reddit.subreddit import Subreddit
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.padding import Padding
 
 load_dotenv()
 console = Console()
@@ -96,25 +97,29 @@ def render_post(post: Submission, base_url: str, _timezone: str) -> None:
     created_at = f"| [b]{datetime.fromtimestamp(post.created_utc, pytz.timezone(_timezone)).strftime('%b %-d %H:%M')}[/b] ({_timezone})"
     selftext = post.selftext if len(post.selftext) else ""
 
+    padding_values = (0, 2, 0, 2)
+
     # render
     console.rule(
         style="white",
         title=header,
     )
-    console.print(title)
+    console.print(Padding(title, padding_values))
     if selftext:
-        console.print()
-    console.print(Markdown(selftext))
-    if selftext:
-        console.print()
+        console.print("", Padding(Markdown(selftext), padding_values), "")
     if post_type in [
         "image",
         "video",
         "gallery",
     ]:
+        # thumbnail padding
+        console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
     console.print(
-        f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}"
+        Padding(
+            f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}",
+            padding_values,
+        )
     )
     console.rule(style="white")
 
