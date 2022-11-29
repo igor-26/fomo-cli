@@ -123,7 +123,7 @@ List of subreddits to exclude.
 
 **Example**
 
-List posts from `r/rust` and `r/python` created in the last hour.
+List posts from `r/art` created in the last 3 hours.
 ```python
 python fomo.py --integrations-include reddit --reddit-include art --reddit-hours-ago 3
  ```
