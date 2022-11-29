@@ -137,7 +137,7 @@ def render_to_console(
     time_ago = datetime.utcnow() - timedelta(hours=hours_ago)
 
     console.print(
-        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇"
+        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇", end=''
     )
 
     for subreddit in subreddits:
