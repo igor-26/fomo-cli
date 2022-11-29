@@ -1,11 +1,11 @@
 import json
 import os
 from argparse import Namespace
-from app.parser import get_parsed_args
 
 from dotenv import load_dotenv
 
 from app.lib import build_integration_function_map, get_integration_render_functions
+from app.parser import get_parsed_args
 
 load_dotenv()
 
@@ -13,7 +13,7 @@ ENABLED_INTEGRATIONS: list[str] = json.loads(os.getenv("ENABLED_INTEGRATIONS"))
 ARGS: Namespace = get_parsed_args()
 
 
-if __name__ == "__main__":
+def main():
     integration_function_map = build_integration_function_map(
         enabled_integrations=ENABLED_INTEGRATIONS
     )
@@ -23,3 +23,7 @@ if __name__ == "__main__":
 
     for fn in integration_functions_to_run:
         fn()
+
+
+if __name__ == "__main__":
+    main()
