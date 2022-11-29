@@ -63,7 +63,7 @@ def format_ratio(ratio: float) -> str:
 def get_post_type(
     post: Submission,
 ) -> Tuple[str, str]:
-    """Returns tuple post type and emoji representation based on available post properties"""
+    """Returns tuple of post type and emoji representation based on available post properties"""
 
     if hasattr(post, "post_hint"):
         post_hint = post.post_hint
@@ -82,8 +82,11 @@ def get_post_type(
 
 def render_post(post: Submission, base_url: str, _timezone: str) -> None:
     """Renders individual post to console"""
+
     # data setup
+    padding_values = (0, 2, 0, 2)
     post_type, post_hint_emoji = get_post_type(post)
+
     subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
     author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
 
@@ -96,8 +99,6 @@ def render_post(post: Submission, base_url: str, _timezone: str) -> None:
     subreddit_info = f"| {author_link} in {subreddit_link}"
     created_at = f"| [b]{datetime.fromtimestamp(post.created_utc, pytz.timezone(_timezone)).strftime('%b %-d %H:%M')}[/b] ({_timezone})"
     selftext = post.selftext if len(post.selftext) else ""
-
-    padding_values = (0, 2, 0, 2)
 
     # render
     console.rule(
