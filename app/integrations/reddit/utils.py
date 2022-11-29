@@ -114,8 +114,10 @@ def render_post(post: Submission, base_url: str, _timezone: str) -> None:
         "gallery",
     ]:
         # thumbnail padding
+        console.print()
         console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
+        console.print()
     console.print(
         Padding(
             f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}",
