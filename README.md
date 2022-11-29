@@ -4,7 +4,7 @@
 </p>
 
 **FOMO** is a CLI tool that helps you stay up to date with your social media.
-<br>No ads, no suggested content, only the content you are subscribed to. 
+<br>No ads, no suggested content, only the content you are subscribed to.
 
 ## Getting Started
 
@@ -123,9 +123,9 @@ List of subreddits to exclude.
 
 **Example**
 
-List posts from `r/rust` and `r/python` created in the last hour.
+List posts from `r/art` created in the last 3 hours.
 ```python
-python fomo.py --integrations-include reddit --reddit-include rust python --reddit-hours-ago 1
+python fomo.py --integrations-include reddit --reddit-include art --reddit-hours-ago 3
  ```
 <p align="center">
   <img src="assets/usage_reddit.png"/>
