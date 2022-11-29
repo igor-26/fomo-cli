@@ -39,5 +39,4 @@ def render_reddit_results():
     render_to_console(
         subreddits=filtered_subreddits,
         hours_ago=hours_ago,
-        base_url=REDDIT_BASE_URL,
     )

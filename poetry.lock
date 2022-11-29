@@ -99,6 +99,17 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "imgcat"
+version = "0.5.0"
+description = "imgcat as Python API and CLI"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+test = ["pytest (<5.0)", "numpy", "torch", "torchvision", "tensorflow (>=2.0)", "matplotlib (>=3.1)", "pillow"]
+
+[[package]]
 name = "mypy"
 version = "0.982"
 description = "Optional static typing for Python"
@@ -444,7 +455,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "be0500db874a04d78af755498adb7bb764ca67edfbf0dab2aaa72375afc3c7f4"
+content-hash = "ad76625b464f060b7d69ea463719f3175e64cb4c6cfda7c233383724f4fac583"
 
 [metadata.files]
 async-timeout = [
@@ -501,6 +512,9 @@ deprecated = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
+]
+imgcat = [
+    {file = "imgcat-0.5.0.tar.gz", hash = "sha256:a6261bd3c766b1761a146d6e7209fb54620691b31057d0c050b96a761293cfe0"},
 ]
 mypy = [
     {file = "mypy-0.982-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5085e6f442003fa915aeb0a46d4da58128da69325d8213b4b35cc7054090aed5"},

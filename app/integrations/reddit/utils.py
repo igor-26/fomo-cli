@@ -1,20 +1,19 @@
 import os
 from argparse import Namespace
 from datetime import datetime, timedelta
-from textwrap import dedent
-from typing import Iterator, cast
+from typing import Iterator, Tuple, cast
 
 import pytz
 from dotenv import load_dotenv
 from praw.models.reddit.submission import Submission
 from praw.models.reddit.subreddit import Subreddit
 from rich.console import Console
-from rich.markup import escape
-from rich.panel import Panel
+from rich.markdown import Markdown
 
 load_dotenv()
 console = Console()
 _TIMEZONE = cast(str, os.getenv("_TIMEZONE"))
+REDDIT_BASE_URL = "https://www.reddit.com"
 
 
 def filter_subreddits(
@@ -60,46 +59,69 @@ def format_ratio(ratio: float) -> str:
     return f"{ratio_emoji} {round(ratio * 100)}%"
 
 
-def format_post_hint(post: Submission) -> str:
-    """Returns formatted post hint representation"""
+def get_post_type(
+    post: Submission,
+) -> Tuple[str, str]:
+    """Returns tuple post type and emoji representation based on available post properties"""
 
     if hasattr(post, "post_hint"):
         post_hint = post.post_hint
 
         if post_hint == "image":
-            return "🖼" + " "
+            return "image", f"🖼 "
 
         if post_hint in ["hosted:video", "rich:video"]:
-            return "🎥"
+            return "video", "🎥"
 
     if hasattr(post, "is_gallery"):
-        return "Gallery 🖼" + " "
+        return "gallery", "🌌"
 
-    return "🔗"
+    return "link", "🔗"
 
 
-def format_post(post: Submission, base_url: str, _timezone: str) -> str:
-    """Returns formatted post representation"""
+def render_post(post: Submission, base_url: str, _timezone: str) -> None:
+    """Renders individual post to console"""
+    # data setup
+    post_type, post_hint_emoji = get_post_type(post)
+    subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
+    author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
 
-    title = f"{format_post_hint(post)} [green][link={base_url+post.permalink}]{post.title}[/link][/green]"
+    header = f"[bold red]{post_hint_emoji} {post_type.capitalize()}[/bold red]"
+    title = f"[green][link={base_url+post.permalink}]{post.title}[/link][/green]"
     ups = f"[red]↑{post.ups}[/red]"
     upvote_ratio = format_ratio(post.upvote_ratio)
     comments = f"💬 {post.num_comments}"
     flair = f"[white]{f' | [red bold]{post.link_flair_text}[/red bold]' if post.link_flair_text else ''}"
-    subreddit_info = f"| {post.author} in {post.subreddit_name_prefixed}"
+    subreddit_info = f"| {author_link} in {subreddit_link}"
     created_at = f"| [b]{datetime.fromtimestamp(post.created_utc, pytz.timezone(_timezone)).strftime('%b %-d %H:%M')}[/b] ({_timezone})"
-    selftext = f"\n{escape(post.selftext)}\n\n" if len(post.selftext) else ""
+    selftext = post.selftext if len(post.selftext) else ""
 
-    return dedent(
-        f"{title}"
-        "\n"
-        f"{selftext}"
+    # render
+    console.rule(
+        style="white",
+        title=header,
+    )
+    console.print(title)
+    if selftext:
+        console.print()
+    console.print(Markdown(selftext))
+    if selftext:
+        console.print()
+    if post_type in [
+        "image",
+        "video",
+        "gallery",
+    ]:
+        os.system(f"imgcat {post.thumbnail}")
+    console.print(
         f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}"
     )
+    console.rule(style="white")
 
 
 def render_to_console(
-    subreddits: list[Subreddit], hours_ago: int, base_url: str
+    subreddits: list[Subreddit],
+    hours_ago: int,
 ) -> None:
     """Renders processed data to console"""
 
@@ -127,4 +149,4 @@ def render_to_console(
                 key=lambda post: post.created_utc,
                 reverse=True,
             ):
-                console.print(Panel(format_post(post, base_url, _TIMEZONE)))
+                render_post(post=post, base_url=REDDIT_BASE_URL, _timezone=_TIMEZONE)
