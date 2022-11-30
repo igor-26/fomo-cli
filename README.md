@@ -6,6 +6,9 @@
 **FOMO** is a CLI tool that helps you stay up to date with your social media.
 <br>No ads, no suggested content, only the content you are subscribed to.
 
+## Showcase
+![fomo-demo](https://user-images.githubusercontent.com/38831677/204675034-8d1cfe6b-b384-45f9-8db0-3d545d64898f.gif)
+
 ## Getting Started
 
 1. Clone the repository
