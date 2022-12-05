@@ -126,9 +126,9 @@ List of subreddits to exclude.
 
 **Example**
 
-List posts from `r/art` created in the last 3 hours.
+List posts from `r/food` created in the last 3 hours.
 ```python
-python fomo.py --integrations-include reddit --reddit-include art --reddit-hours-ago 3
+python fomo.py --integrations-include reddit --reddit-include food --reddit-hours-ago 3
  ```
 <p align="center">
   <img src="assets/usage_reddit.png"/>
