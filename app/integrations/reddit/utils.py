@@ -80,51 +80,78 @@ def get_post_type(
     return "link", "🔗"
 
 
-def render_post(post: Submission, base_url: str, _timezone: str) -> None:
+def render_post(
+    post: Submission,
+    base_url: str,
+    _timezone: str,
+) -> None:
     """Renders individual post to console"""
 
-    # data setup
+    ## data setup
     padding_values = (0, 2, 0, 2)
     post_type, post_hint_emoji = get_post_type(post)
+    exclusive_thumbnail_tags = ["nsfw", "spoiler"]
+    allowed_thumbnail_post_types = [
+        "image",
+        "video",
+        "gallery",
+    ]
 
     subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
     author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
 
-    header = f"[bold red]{post_hint_emoji} {post_type.capitalize()}[/bold red]"
+    header = f"[bold white]{post_hint_emoji} {post_type.capitalize()}[/bold white]"
     title = f"[green][link={base_url+post.permalink}]{post.title}[/link][/green]"
     ups = f"[red]↑{post.ups}[/red]"
     upvote_ratio = format_ratio(post.upvote_ratio)
     comments = f"💬 {post.num_comments}"
-    flair = f"[white]{f' | [red bold]{post.link_flair_text}[/red bold]' if post.link_flair_text else ''}"
+    flair = f"[white]{f' | [bold white]{post.link_flair_text}[/bold white]' if post.link_flair_text else ''}"
     subreddit_info = f"| {author_link} in {subreddit_link}"
     created_at = f"| [b]{datetime.fromtimestamp(post.created_utc, pytz.timezone(_timezone)).strftime('%b %-d %H:%M')}[/b] ({_timezone})"
     selftext = post.selftext if len(post.selftext) else ""
 
-    # render
+    ## render line by line
+    # top border
     console.rule(
         style="white",
         title=header,
     )
+    # title
     console.print(Padding(title, padding_values))
+    # body
     if selftext:
         console.print("", Padding(Markdown(selftext), padding_values), "")
-    if post_type in [
-        "image",
-        "video",
-        "gallery",
-    ]:
-        # thumbnail padding
+    # thumbnail
+    if (
+        post_type in allowed_thumbnail_post_types
+        and post.thumbnail not in exclusive_thumbnail_tags
+    ):
         console.print()
         console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
-        console.print()
-
+        console.print("", end="")
+    # View source
+    if hasattr(post, "url_overridden_by_dest"):
+        post_tag = (
+            f" [bold red] {post.thumbnail} [/bold red]"
+            if post.thumbnail in exclusive_thumbnail_tags
+            else ""
+        )
+        console.print(
+            Padding(
+                f"[bold blue][link={post.url_overridden_by_dest}]View source{post_tag}[/link][/bold blue]",
+                padding_values,
+            ),
+            "",  # nl
+        )
+    # post info
     console.print(
         Padding(
             f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}",
             padding_values,
         )
     )
+    # bottom border
     console.rule(style="white")
 
 
@@ -137,7 +164,8 @@ def render_to_console(
     time_ago = datetime.utcnow() - timedelta(hours=hours_ago)
 
     console.print(
-        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇", end=''
+        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇",
+        end="",
     )
 
     for subreddit in subreddits:
@@ -158,4 +186,8 @@ def render_to_console(
                 key=lambda post: post.created_utc,
                 reverse=True,
             ):
-                render_post(post=post, base_url=REDDIT_BASE_URL, _timezone=_TIMEZONE)
+                render_post(
+                    post=post,
+                    base_url=REDDIT_BASE_URL,
+                    _timezone=_TIMEZONE,
+                )
