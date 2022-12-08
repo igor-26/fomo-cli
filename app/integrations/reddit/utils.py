@@ -87,7 +87,7 @@ def render_post(
 ) -> None:
     """Renders individual post to console"""
 
-    # data setup
+    ## data setup
     padding_values = (0, 2, 0, 2)
     post_type, post_hint_emoji = get_post_type(post)
     exclusive_thumbnail_tags = ["nsfw", "spoiler"]
@@ -100,31 +100,27 @@ def render_post(
     subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
     author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
 
-    header = f"[bold red]{post_hint_emoji} {post_type.capitalize()}[/bold red]"
+    header = f"[bold white]{post_hint_emoji} {post_type.capitalize()}[/bold white]"
     title = f"[green][link={base_url+post.permalink}]{post.title}[/link][/green]"
     ups = f"[red]↑{post.ups}[/red]"
     upvote_ratio = format_ratio(post.upvote_ratio)
     comments = f"💬 {post.num_comments}"
-    flair = f"[white]{f' | [red bold]{post.link_flair_text}[/red bold]' if post.link_flair_text else ''}"
+    flair = f"[white]{f' | [bold white]{post.link_flair_text}[/bold white]' if post.link_flair_text else ''}"
     subreddit_info = f"| {author_link} in {subreddit_link}"
     created_at = f"| [b]{datetime.fromtimestamp(post.created_utc, pytz.timezone(_timezone)).strftime('%b %-d %H:%M')}[/b] ({_timezone})"
     selftext = post.selftext if len(post.selftext) else ""
 
-    # render
-
+    ## render line by line
     # top border
     console.rule(
         style="white",
         title=header,
     )
-
     # title
     console.print(Padding(title, padding_values))
-
     # body
     if selftext:
         console.print("", Padding(Markdown(selftext), padding_values), "")
-
     # thumbnail
     if (
         post_type in allowed_thumbnail_post_types
@@ -134,20 +130,20 @@ def render_post(
         console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
         console.print("", end="")
-
-        # View original
+    # View source
+    if hasattr(post, "url_overridden_by_dest"):
+        post_tag = (
+            f" [bold red] {post.thumbnail} [/bold red]"
+            if post.thumbnail in exclusive_thumbnail_tags
+            else ""
+        )
         console.print(
             Padding(
-                f"[bold blue][link={post.url_overridden_by_dest}]View original[/link][/bold blue]",
+                f"[bold blue][link={post.url_overridden_by_dest}]View source{post_tag}[/link][/bold blue]",
                 padding_values,
             ),
             "",  # nl
         )
-
-    # thumbnail tag
-    if post.thumbnail in exclusive_thumbnail_tags:
-        console.print(post.thumbnail)
-
     # post info
     console.print(
         Padding(
@@ -155,6 +151,7 @@ def render_post(
             padding_values,
         )
     )
+    # bottom border
     console.rule(style="white")
 
 
