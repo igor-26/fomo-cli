@@ -80,12 +80,22 @@ def get_post_type(
     return "link", "🔗"
 
 
-def render_post(post: Submission, base_url: str, _timezone: str) -> None:
+def render_post(
+    post: Submission,
+    base_url: str,
+    _timezone: str,
+) -> None:
     """Renders individual post to console"""
 
     # data setup
     padding_values = (0, 2, 0, 2)
     post_type, post_hint_emoji = get_post_type(post)
+    exclusive_thumbnail_tags = ["nsfw", "spoiler"]
+    allowed_thumbnail_post_types = [
+        "image",
+        "video",
+        "gallery",
+    ]
 
     subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
     author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
@@ -101,24 +111,44 @@ def render_post(post: Submission, base_url: str, _timezone: str) -> None:
     selftext = post.selftext if len(post.selftext) else ""
 
     # render
+
+    # top border
     console.rule(
         style="white",
         title=header,
     )
+
+    # title
     console.print(Padding(title, padding_values))
+
+    # body
     if selftext:
         console.print("", Padding(Markdown(selftext), padding_values), "")
-    if post_type in [
-        "image",
-        "video",
-        "gallery",
-    ]:
-        # thumbnail padding
+
+    # thumbnail
+    if (
+        post_type in allowed_thumbnail_post_types
+        and post.thumbnail not in exclusive_thumbnail_tags
+    ):
         console.print()
         console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
-        console.print()
+        console.print("", end="")
 
+        # View original
+        console.print(
+            Padding(
+                f"[bold blue][link={post.url_overridden_by_dest}]View original[/link][/bold blue]",
+                padding_values,
+            ),
+            "",  # nl
+        )
+
+    # thumbnail tag
+    if post.thumbnail in exclusive_thumbnail_tags:
+        console.print(post.thumbnail)
+
+    # post info
     console.print(
         Padding(
             f"{ups}  {upvote_ratio}  {comments} {flair} {subreddit_info} {created_at}",
@@ -137,7 +167,8 @@ def render_to_console(
     time_ago = datetime.utcnow() - timedelta(hours=hours_ago)
 
     console.print(
-        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇", end=''
+        f"[bold red]Reddit[/bold red] Showing posts since [bold]{hours_ago}h[/bold] ago 👇",
+        end="",
     )
 
     for subreddit in subreddits:
@@ -158,4 +189,8 @@ def render_to_console(
                 key=lambda post: post.created_utc,
                 reverse=True,
             ):
-                render_post(post=post, base_url=REDDIT_BASE_URL, _timezone=_TIMEZONE)
+                render_post(
+                    post=post,
+                    base_url=REDDIT_BASE_URL,
+                    _timezone=_TIMEZONE,
+                )
