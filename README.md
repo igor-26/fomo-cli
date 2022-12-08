@@ -7,7 +7,7 @@
 <br>No ads, no suggested content, only the content you are subscribed to.
 
 ## Showcase
-![fomo-demo](https://user-images.githubusercontent.com/38831677/204675034-8d1cfe6b-b384-45f9-8db0-3d545d64898f.gif)
+![fomo-demo](https://user-images.githubusercontent.com/38831677/206591329-9d9d4af0-ac46-4525-b99a-7c9a36139974.gif)
 
 ## Getting Started
 
@@ -131,7 +131,7 @@ List posts from `r/food` created in the last 3 hours.
 python fomo.py --integrations-include reddit --reddit-include food --reddit-hours-ago 3
  ```
 <p align="center">
-  <img src="assets/usage_reddit.png"/>
+  <img src="https://user-images.githubusercontent.com/38831677/206591502-24663bd7-2d57-4c52-ae99-d60ed151dad4.png"/>
 </p>
 
 ### Spotify
