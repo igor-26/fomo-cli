@@ -111,9 +111,6 @@ def format_tweet(tweet: Tweet, user: User, metrics: dict, _timezone: str) -> str
     """Returns formatted tweet representation"""
 
     name = f"[bold]{user['name']}[/bold]"
-    # username = (
-    #     f"[link=https://twitter.com/{user['username']}]@{user['username']}[/link]"
-    # )
     username_link = create_link(
         href=f"https://twitter.com/{user['username']}",
         label=f"@{user['username']}",
