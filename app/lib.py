@@ -42,3 +42,8 @@ def build_integration_function_map(
         integration_function_map["spotify"] = render_spotify_results
 
     return integration_function_map
+
+
+def create_link(href: str, label: str, style: str) -> str:
+    """Returns formatted link"""
+    return f"[{style}][link={href}]{label}[/link][/{style}]"
