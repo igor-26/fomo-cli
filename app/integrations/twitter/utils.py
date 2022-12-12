@@ -14,6 +14,8 @@ from tweepy.client import Response
 from tweepy.tweet import Tweet
 from tweepy.user import User
 
+from app.lib import create_link
+
 load_dotenv()
 console = Console()
 _TIMEZONE = cast(str, os.getenv("_TIMEZONE"))
@@ -109,8 +111,10 @@ def format_tweet(tweet: Tweet, user: User, metrics: dict, _timezone: str) -> str
     """Returns formatted tweet representation"""
 
     name = f"[bold]{user['name']}[/bold]"
-    username = (
-        f"[link=https://twitter.com/{user['username']}]@{user['username']}[/link]"
+    username_link = create_link(
+        href=f"https://twitter.com/{user['username']}",
+        label=f"@{user['username']}",
+        style="white",
     )
     created_at = f'{(tweet["created_at"].astimezone(pytz.timezone(_timezone))).strftime("%b %-d %H:%M")} ({_timezone})'
     body = tweet["text"]
@@ -118,14 +122,18 @@ def format_tweet(tweet: Tweet, user: User, metrics: dict, _timezone: str) -> str
     retweets = f"🔃 {metrics['retweet_count']}"
     likes = f"♥️  {metrics['like_count']}"
     tweet_type, tweet_color = get_tweet_type(tweet)
-    link_to_tweet = f"[{tweet_color}][link=https://twitter.com/twitter/status/{tweet['id']}]Go to {tweet_type} →[/link][/{tweet_color}]"
+    tweet_link = create_link(
+        href=f"https://twitter.com/twitter/status/{tweet['id']}",
+        label=f"Go to {tweet_type} →",
+        style=tweet_color,
+    )
 
     return dedent(
-        f"{name} {username} · {created_at}"
+        f"{name} {username_link} · {created_at}"
         "\n\n"
         f"{body}"
         "\n\n"
-        f"{replies}  {retweets}  {likes}  {link_to_tweet}"
+        f"{replies}  {retweets}  {likes}  {tweet_link}"
     )
 
 

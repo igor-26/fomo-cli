@@ -11,6 +11,8 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.padding import Padding
 
+from app.lib import create_link
+
 load_dotenv()
 console = Console()
 _TIMEZONE = cast(str, os.getenv("_TIMEZONE"))
@@ -88,8 +90,8 @@ def render_post(
     """Renders individual post to console"""
 
     ## data setup
-    padding_values = (0, 2, 0, 2)
     post_type, post_hint_emoji = get_post_type(post)
+
     exclusive_thumbnail_tags = ["nsfw", "spoiler"]
     allowed_thumbnail_post_types = [
         "image",
@@ -97,11 +99,27 @@ def render_post(
         "gallery",
     ]
 
-    subreddit_link = f"[green][link={base_url+'/'+post.subreddit_name_prefixed}]{post.subreddit_name_prefixed}[/link][/green]"
-    author_link = f"[green][link={base_url+'/user/'+str(post.author)}]u/{post.author}[/link][/green]"
+    should_render_thumbnail = (
+        post_type in allowed_thumbnail_post_types
+        and post.thumbnail not in exclusive_thumbnail_tags
+    )
 
+    subreddit_link = create_link(
+        href=f"{base_url}/{post.subreddit_name_prefixed}",
+        label=post.subreddit_name_prefixed,
+        style="green",
+    )
+    author_link = create_link(
+        href=f"{base_url}/user/{post.author}",
+        label=f"u/{post.author}",
+        style="green",
+    )
     header = f"[bold white]{post_hint_emoji} {post_type.capitalize()}[/bold white]"
-    title = f"[green][link={base_url+post.permalink}]{post.title}[/link][/green]"
+    title_link = create_link(
+        href=base_url + post.permalink,
+        label=post.title,
+        style="green",
+    )
     ups = f"[red]↑{post.ups}[/red]"
     upvote_ratio = format_ratio(post.upvote_ratio)
     comments = f"💬 {post.num_comments}"
@@ -111,39 +129,48 @@ def render_post(
     selftext = post.selftext if len(post.selftext) else ""
 
     ## render line by line
+    padding_values = (0, 2, 0, 2)
+
     # top border
     console.rule(
         style="white",
         title=header,
     )
+
     # title
-    console.print(Padding(title, padding_values))
+    console.print(Padding(title_link, padding_values))
+
     # body
     if selftext:
         console.print("", Padding(Markdown(selftext), padding_values), "")
+
     # thumbnail
-    if (
-        post_type in allowed_thumbnail_post_types
-        and post.thumbnail not in exclusive_thumbnail_tags
-    ):
+    if should_render_thumbnail:
         console.print()
         console.print(" " * 2, end="")
         os.system(f"imgcat {post.thumbnail}")
         console.print("", end="")
+
     # View source
     if hasattr(post, "url_overridden_by_dest"):
         post_tag = (
-            f" [bold red] {post.thumbnail} [/bold red]"
+            f" [white on red] {post.thumbnail} [/white on red]"
             if post.thumbnail in exclusive_thumbnail_tags
             else ""
         )
+        view_source_link = create_link(
+            href=post.url_overridden_by_dest,
+            label=f"View source{post_tag}",
+            style="bold blue",
+        )
         console.print(
             Padding(
-                f"[bold blue][link={post.url_overridden_by_dest}]View source{post_tag}[/link][/bold blue]",
+                view_source_link,
                 padding_values,
             ),
             "",  # nl
         )
+
     # post info
     console.print(
         Padding(
@@ -151,6 +178,7 @@ def render_post(
             padding_values,
         )
     )
+
     # bottom border
     console.rule(style="white")
 

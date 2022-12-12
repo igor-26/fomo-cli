@@ -5,6 +5,8 @@ from rich.console import Console
 from rich.progress import track as rich_track
 from spotipy import Spotify
 
+from app.lib import create_link
+
 console = Console()
 
 
@@ -128,7 +130,7 @@ def format_artists(artists_list: list[dict], delimiter: str) -> str:
     formatted_artists_list = []
     for _artist in artists_list:
         formatted_artists_list.append(
-            f"[green][link={_artist['url']}]{_artist['name']}[/link][/green]"
+            create_link(href=_artist["url"], label=_artist["name"], style="green")
         )
 
     return delimiter.join(formatted_artists_list)
@@ -137,7 +139,8 @@ def format_artists(artists_list: list[dict], delimiter: str) -> str:
 def format_track(track: dict) -> str:
     """Returns formatted track representation"""
 
-    title = f"[red bold][link={track['url']}]{track['name']}[/link][/red bold]"
+    title_link = create_link(href=track["url"], label=track["name"], style="red bold")
+
     duration = (
         f" {datetime.fromtimestamp(track['duration_ms'] / 1000).strftime('%M:%S')}"
     )
@@ -149,7 +152,7 @@ def format_track(track: dict) -> str:
         f"[white bold]{track['release_date'].strftime(format_token)}[/white bold]"
     )
 
-    return dedent(f"{title}" f"{duration}" f" by {artists}" f" on {release_date}")
+    return dedent(f"{title_link}" f"{duration}" f" by {artists}" f" on {release_date}")
 
 
 def render_to_console(track_list: list[dict]) -> None:
