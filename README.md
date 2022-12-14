@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="assets/banner.png"/>
+  <img src="https://user-images.githubusercontent.com/38831677/207667257-541dc485-a790-4091-a8e3-0f505e5b56b0.png"/>
 </p>
 
 **FOMO** is a CLI tool that helps you stay up to date with your social media.
@@ -98,7 +98,7 @@ List tweets and retweets created in the last 12 hours.
 python fomo.py --integrations-include twitter --twitter-hours-ago 12 --twitter-retweets
  ```
 <p align="center">
-  <img src="assets/usage_twitter.png"/>
+  <img src="https://user-images.githubusercontent.com/38831677/207667395-5009184e-e142-4978-a546-efdb180298f1.png"/>
 </p>
 
 ### Reddit
@@ -150,5 +150,5 @@ List songs released in the last 3 days from artists the user is subscribed to.
 python fomo.py --integrations-include spotify --spotify-days-ago 3
  ```
 <p align="center">
-  <img src="assets/usage_spotify.png"/>
+  <img src="https://user-images.githubusercontent.com/38831677/207667618-7ee0a8c7-1d47-42ec-b02d-c3cc50110c20.png"/>
 </p>
