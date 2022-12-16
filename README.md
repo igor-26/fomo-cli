@@ -61,7 +61,7 @@ List of integrations to exclude.
 
 ---
 
-### Twitter | [developer app setup](https://fomo-cli.vercel.app/integrations/twitter)
+### Twitter | [integration setup](https://fomo-cli.vercel.app/integrations/twitter)
 
 
 **`--twitter-hours-ago`** | `int`
@@ -104,7 +104,7 @@ python fomo.py --integrations-include twitter --twitter-hours-ago 12 --twitter-r
   <img src="https://user-images.githubusercontent.com/38831677/207667395-5009184e-e142-4978-a546-efdb180298f1.png"/>
 </p>
 
-### Reddit | [developer app setup](https://fomo-cli.vercel.app/integrations/reddit)
+### Reddit | [integration setup](https://fomo-cli.vercel.app/integrations/reddit)
 
 
 **`--reddit-hours-ago`** | `int`
@@ -137,7 +137,7 @@ python fomo.py --integrations-include reddit --reddit-include food --reddit-hour
   <img src="https://user-images.githubusercontent.com/38831677/206591502-24663bd7-2d57-4c52-ae99-d60ed151dad4.png"/>
 </p>
 
-### Spotify | [developer app setup](https://fomo-cli.vercel.app/integrations/spotify)
+### Spotify | [integration setup](https://fomo-cli.vercel.app/integrations/spotify)
 
 **`--spotify-days-ago`** | `int`
 
