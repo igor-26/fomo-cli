@@ -9,6 +9,9 @@
 ## Showcase
 ![fomo-demo](https://user-images.githubusercontent.com/38831677/206591329-9d9d4af0-ac46-4525-b99a-7c9a36139974.gif)
 
+## Before you start
+🚨 This was developed and tested in [iTerm](https://iterm2.com/) with [oh-my-zsh](https://ohmyz.sh/). Depending on your preferred terminal, inline images and link previews may not be available.
+
 ## Getting Started
 
 1. Clone the repository
